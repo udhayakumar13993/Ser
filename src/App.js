@@ -1,26 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
+
 import './App.css';
+import countries from './CountryList'
+import Country from './Component/Country';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component{
+  constructor(props){
+    super(props)
+    this.state={
+      countries:countries,
+      searchValue:''
+    }
+  }
+  editSearchValue=(e)=>{
+    this.setState({
+      searchValue:e.target.value
+    })
+  }
+  dynamicSearchUpdate=()=>{
+    return this.state.countries.filter(countries=>countries.toLowerCase().includes(this.state.searchValue.toLowerCase()))
+  }
+  render(){
+
+    return(
+      <div className='demo'>
+      <input type="text" value ={this.state.searchValue} onChange={this.editSearchValue} placeholder='Search Country'/><br/>
+      <Country countries={this.dynamicSearchUpdate()}/>
+
+      </div>
+      )
+  }
 }
-
 export default App;
